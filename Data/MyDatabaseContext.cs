@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
 using DotNetCoreSqlDb.Models;
 
 namespace DotNetCoreSqlDb.Data
@@ -13,7 +12,7 @@ namespace DotNetCoreSqlDb.Data
         public MyDatabaseContext (DbContextOptions<MyDatabaseContext> options, IHttpContextAccessor accessor)
     : base(options)
     {
-        var conn = Database.GetDbConnection() as SqlConnection;
+        var conn = Database.GetDbConnection() as Microsoft.Data.SqlClient.SqlConnection;
         conn.AccessToken = accessor.HttpContext.Request.Headers["X-MS-TOKEN-AAD-ACCESS-TOKEN"];
     }
 
