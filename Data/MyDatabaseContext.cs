@@ -13,8 +13,11 @@ namespace DotNetCoreSqlDb.Data
         public MyDatabaseContext (DbContextOptions<MyDatabaseContext> options, IHttpContextAccessor accessor)
             : base(options)
         {
-            var conn = Database.GetDbConnection() as SqlConnection;
-            conn.AccessToken = accessor.HttpContext.Request.Headers["X-MS-TOKEN-AAD-ACCESS-TOKEN"];
+            var conn = Database.GetDbConnection() as Microsoft.Data.SqlClient.SqlConnection;
+            if (conn != null && accessor.HttpContext?.Request?.Headers != null)
+            {
+                conn.AccessToken = accessor.HttpContext.Request.Headers["X-MS-TOKEN-AAD-ACCESS-TOKEN"];
+            }
         }
 
         public DbSet<DotNetCoreSqlDb.Models.Todo> Todo { get; set; } = default!;
