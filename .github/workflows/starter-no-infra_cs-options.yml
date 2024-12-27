@@ -30,7 +30,10 @@ jobs:
       - name: Install dotnet ef
         run: dotnet tool install -g dotnet-ef --version 8.*
 
-      - name: Install SQL data client
+      - name: Install Microsoft.Data.SqlClient 
+        run: dotnet add package Microsoft.Data.SqlClient 
+
+      - name: Install System.Data.SqlClient 
         run: dotnet add package System.Data.SqlClient 
 
       - name: Create migration bundle
