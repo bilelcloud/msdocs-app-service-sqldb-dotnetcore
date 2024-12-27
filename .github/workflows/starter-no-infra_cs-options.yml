@@ -33,9 +33,6 @@ jobs:
       - name: Install SQL data client
         run: dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 
-      - name: Install SQL tools
-        run: dotnet tool install --global dotnet-sql-tool 
-
       - name: Create migration bundle
         run: dotnet ef migrations bundle --runtime linux-x64 -o ${{env.DOTNET_ROOT}}/myapp/migrationsbundle
 
