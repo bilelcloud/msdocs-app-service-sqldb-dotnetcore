@@ -3,15 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace DotNetCoreSqlDb.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IConfiguration _configuration;
+
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -33,10 +37,15 @@ namespace DotNetCoreSqlDb.Controllers
         public async Task<IActionResult> DisplayHtml()
         {
             string htmlContent;
+            // string url = _configuration["StorageSettings:HtmlUrl"];
+            string endpoint = _configuration["AZURE_STORAGEBLOB_RESOURCEENDPOINT"];
+            string containerName = _configuration["ContainerName"];
+            string fileName = _configuration["FileName"];
+            string url = $"{endpoint}/{containerName}/{fileName}";
+
             using (var httpClient = new HttpClient())
             {
-                // Replace with your storage container URL
-                var response = await httpClient.GetAsync("https://serviceconnector01.blob.core.windows.net/demo/index.html");
+                var response = await httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
                 htmlContent = await response.Content.ReadAsStringAsync();
             }
