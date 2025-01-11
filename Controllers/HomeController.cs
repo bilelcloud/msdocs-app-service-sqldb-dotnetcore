@@ -41,7 +41,7 @@ namespace DotNetCoreSqlDb.Controllers
             string endpoint = _configuration["AZURE_STORAGEBLOB_RESOURCEENDPOINT"];
             string containerName = _configuration["ContainerName"];
             string fileName = _configuration["FileName"];
-            string url = $"{endpoint}/{containerName}/{fileName}";
+            string url = $"{endpoint}{containerName}/{fileName}";
 
             using (var httpClient = new HttpClient())
             {
