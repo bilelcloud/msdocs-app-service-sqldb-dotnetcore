@@ -1,0 +1,11 @@
+@{
+    ViewData["Title"] = "Display HTML";
+    var htmlContent = ViewData["HtmlContent"] as string;
+}
+
+<div class="container">
+    <h1>Display HTML</h1>
+    <div>
+        @Html.Raw(htmlContent)
+    </div>
+</div>
